@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <AlteryxJavaScriptPlugin>
   <EngineSettings EngineDll="Python" EngineDllEntryPoint="main.py" SDKVersion="10.1" />
-  <GuiSettings Html="gui/tableau_datasource_downloader_alpha_v1.0.0Gui.html" Icon="Icon.png" SDKVersion="10.1">
+  <GuiSettings Html="gui/tableau_data_source_downloader_alpha_v1.0.0Gui.html" Icon="tableau_data_source_downloader_alpha_v1.0.0Icon.png" SDKVersion="10.1">
     <InputConnections>
     </InputConnections>
     <OutputConnections>
@@ -10,12 +10,12 @@
   </GuiSettings>
   <Properties>
     <MetaInfo>
-      <Name>Tableau Datasource Downloader</Name>
-      <RootToolName>Tableau Datasource Downloader</RootToolName>
-      <Description>The Tableau Datasource Downloader provides a way to programmatically download .hyper files from a Tableau Server.</Description>
-      <ToolVersion>Alpha v1.0.0.0</ToolVersion>
+      <Name>Tableau Data Source Downloader</Name>
+      <RootToolName>Tableau Data Source Downloader</RootToolName>
+      <Description>The Tableau Data Source Downloader provides a way to programmatically download .hyper files from a Tableau Server.</Description>
+      <ToolVersion>Alpha 1.0.0</ToolVersion>
       <CategoryName>Connectors</CategoryName>
-      <SearchTags>tableau, hyper, datasource, online, server, data, extract</SearchTags>
+      <SearchTags>tableau, hyper, data, source, online, server, data, extract, tdsx</SearchTags>
       <Author>Stephen Wagner</Author>
       <Company>Alteryx, Inc.</Company>
       <Copyright>2019</Copyright>

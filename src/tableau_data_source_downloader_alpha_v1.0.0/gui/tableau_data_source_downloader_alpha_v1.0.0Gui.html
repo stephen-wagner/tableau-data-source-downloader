@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html style="padding:20px">
+
+<head>
+	<meta charset="utf-8">
+	<title>Tableau Data Source Downloader</title>
+
+	<!-- Includes the GUI library, which gives you access to the interface elements used in Designer -->
+	<script type="text/javascript">
+		document.write('<link rel="import" href="' + window.Alteryx.LibDir + '2/lib/includes.html">');
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+
+
+<body>
+    <div class="header-message">
+		<div>XMSG("Tableau Data Source Downloader")</div>
+		<hr class="header-ruler"></hr>
+	</div>
+
+	<article id="credentialsConfig">
+		<div>
+			<hr class="section-ruler"></hr>
+			<label>XMSG("Tableau Server")</label>
+		</div>
+		<div class="content" style="display: block">
+			<section>
+				<label>XMSG("URL")</label>
+				<ayx aria-label='tableau-server-url-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetServerURL", placeholder:"Enter server URL"}' data-item-props='{dataName:"serverURL", dataType:"SimpleString"}'></ayx>
+			</section>
+			<br>
+			<section>
+				<label>XMSG("Site name")</label>
+				<ayx aria-label='site-name-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetSiteName", placeholder:"Enter site name"}' data-item-props='{dataName:"siteName", dataType:"SimpleString"}'></ayx>
+			</section>
+		</div>
+	</article>
+
+	<article id="credentialsConfig">
+			<div>
+				<hr class="section-ruler"></hr>
+				<label>XMSG("Server Credentials")</label>
+			</div>
+			<div class="content" style="display: block">
+				<section>
+					<label>XMSG("Username")</label>
+					<ayx aria-label='username-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetUsername", placeholder:"Enter username"}' data-item-props='{dataName:"username", dataType:"SimpleString"}'></ayx>
+				</section>
+				<br>
+				<section>
+					<label>XMSG("Password")</label>
+					<ayx aria-label='password-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetPassword", placeholder:"Enter password"}' data-item-props='{dataName:"password", dataType:"SimpleString", password:true, encryptionMode:"machine"}'></ayx>
+				</section>
+			</div>
+	</article>
+
+	<article id="datasourceConfig">
+		<div>
+			<hr class="section-ruler"></hr>
+			<label>XMSG("Data Source")</label>
+		</div>
+			<div class="content" style="display: block">
+				<section>
+					<label>XMSG("Name")</label>
+					<ayx aria-label='data-source-name-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetDataSourceName", placeholder:"Enter data source name"}' data-item-props='{dataName:"dataSourceName", dataType:"SimpleString"}'></ayx>
+				</section>
+				<br>
+				<section>
+					<label>XMSG("Save location (use forward slashes in path)")</label>
+					<ayx aria-label='download-location-textbox' data-ui-props='{type:"TextBox", widgetId:"widgetDownloadLocation", placeholder:"Enter location to save data source"}' data-item-props='{dataName:"downloadLocation", dataType:"SimpleString"}'></ayx>
+				</section>
+			</div>
+	</article>
+
+	<script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>

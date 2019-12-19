@@ -2,16 +2,16 @@
 <AlteryxJavaScriptPlugin>
   <Properties>
     <MetaInfo>
-      <Name>Space C Tool</Name>
-      <RootToolName>ml_tools</RootToolName>
-      <Description>spaCy integration with alteryx</Description>
-      <CategoryName>ML Tools</CategoryName>
-      <ToolVersion>1.0.0</ToolVersion>
-      <Author>Ashton Walden</Author>
+      <Name>Tableau Data Source Downloader</Name>
+      <RootToolName>Tableau Data Source Downloader</RootToolName>
+      <Description>The Tableau Data Source Downloader provides a way to programmatically download .hyper files from a Tableau Server.</Description>
+      <CategoryName>Connectors</CategoryName>
+      <ToolVersion>Alpha 1.0.0</ToolVersion>
+      <Author>Stephen Wagner</Author>
       <Company>Alteryx, Inc.</Company>
-      <Copyright>2018</Copyright>
-      <SearchTags>scikit-learn, python, predictive, nlp, language, space</SearchTags>
-      <Icon>icon.png</Icon>
+      <Copyright>2019</Copyright>
+      <SearchTags>tableau, hyper, data, source, online, server, data, extract, tdsx</SearchTags>
+      <Icon>tableau_data_source_downloader_alpha_v1.0.0Icon.png</Icon>
     </MetaInfo>
   </Properties>
 </AlteryxJavaScriptPlugin>

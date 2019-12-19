@@ -18,7 +18,7 @@ except KeyError:
     print(
         "Not able to find APPDATA environment variable. This is expected on Linux/Gitlab CI"
     )
-extras = []
+extras = ['gui']
 
 
 # -------------------------------------------------------------------------------------------------#
