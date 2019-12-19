@@ -2,7 +2,7 @@
 
 ## Description
 
-The Tableau Data Source Downloader provides a way to programmatically download .hyper files from a Tableau Server.
+The Tableau Data Source Downloader tool for Alteryx Designer provides a way to programmatically download .hyper files from a Tableau Server.
 
 ## Setting Up Your Environment
 
