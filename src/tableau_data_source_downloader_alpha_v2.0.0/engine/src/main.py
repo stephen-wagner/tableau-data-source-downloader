@@ -78,7 +78,7 @@ def process_data(output_mgr, user_data, logger):
         all_datasources, pagination_item = server.datasources.get()
         datasource = [datasource for datasource in all_datasources if datasource.name == user_data.data_source_name]
         tdsx_file_path = server.datasources.download(datasource[0].id, filepath=user_data.download_location)
-        logger.display_info_msg("Downloaded the file to {0}.".format(tdsx_file_path))
+        logger.display_info_msg("Downloaded the .tdsx file to {0}.".format(tdsx_file_path))
 
     zip_file_path = re.sub(r'.tdsx', '.zip', tdsx_file_path)
 
@@ -91,10 +91,12 @@ def process_data(output_mgr, user_data, logger):
     extract_to_path = zip_download_folder_path + '\\' + user_data.data_source_name +'_extracted' 
 
     data_extracts_folder_path = extract_to_path + '\Data\Extracts'
-    files_in_data_extracts_folder = os.listdir(data_extracts_folder_path)
 
-    for item in files_in_data_extracts_folder:
-        os.remove(data_extracts_folder_path + '\\' + item)
+    if os.path.exists(data_extracts_folder_path):
+        files_in_data_extracts_folder = os.listdir(data_extracts_folder_path)
+
+        for item in files_in_data_extracts_folder:
+            os.remove(data_extracts_folder_path + '\\' + item)
 
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_to_path)
@@ -103,7 +105,8 @@ def process_data(output_mgr, user_data, logger):
     updated_hyper_file_path = data_extracts_folder_path + '\\' + user_data.data_source_name + '.hyper'
         
     os.rename(hyper_file_path, updated_hyper_file_path)
-
+    
+    logger.display_info_msg("Extracted .hyper file from .tdsx to {0}.".format(updated_hyper_file_path))
     data_out = output_mgr["Output"]
     data_out.data = pd.DataFrame({"File Location": [updated_hyper_file_path]})
     
