@@ -70,9 +70,10 @@
 							<ayx aria-label='data-source-name-dropdown' data-ui-props='{type:"DropDown", widgetId:"widgetDataSourceName", searchable:true, clearable:true, allowCustomValue:true, placeholder:"Select data source to download"}' data-item-props='{dataName:"dataSourceName", dataType:"StringSelector"}'></ayx>
 						</div>
 						<div class="content-col-narrow">
-							<ayx aria-label="get-data-sources-button" data-ui-props='{type:"Button", widgetId:"getDataSources", label: "Populate", category:"primary", onClick:getDataSources}'></ayx>
+							<ayx aria-label="get-data-sources-button" data-ui-props='{type:"Button", widgetId:"getDataSources", label: "Populate", category:"primary", onClick:populateDataSourceNames}'></ayx>
 						</div>
 					</div>
+					<div id="api-error"></div>
 				</section>
 				<br>
 				<section>

@@ -90,16 +90,18 @@ def process_data(output_mgr, user_data, logger):
     zip_download_folder_path = os.path.split(zip_file_path)[0]
     extract_to_path = zip_download_folder_path + '\\' + user_data.data_source_name +'_extracted' 
 
+    data_extracts_folder_path = extract_to_path + '\Data\Extracts'
+    files_in_data_extracts_folder = os.listdir(data_extracts_folder_path)
+
+    for item in files_in_data_extracts_folder:
+        os.remove(data_extracts_folder_path + '\\' + item)
+
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_to_path)
 
-    data_extracts_folder_path = extract_to_path + '\Data\Extracts'
     hyper_file_path = data_extracts_folder_path + '\\' + os.listdir(data_extracts_folder_path)[0]
     updated_hyper_file_path = data_extracts_folder_path + '\\' + user_data.data_source_name + '.hyper'
-
-    if os.path.exists(updated_hyper_file_path):
-        os.remove(updated_hyper_file_path)
-
+        
     os.rename(hyper_file_path, updated_hyper_file_path)
 
     data_out = output_mgr["Output"]

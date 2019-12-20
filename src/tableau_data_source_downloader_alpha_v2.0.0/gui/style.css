@@ -67,5 +67,16 @@ label {
 }
 
 .content-col-narrow {
-    flex: 0.4;
+    flex: 0.35;
+}
+
+.error {
+    color: #FFFFFF;
+    border: 1px solid #DCE3F0;
+    border-radius: 3px;
+    background-color: #D7354a;
+    box-shadow: 0 1px 0 0 rgba(37, 45, 57, 0.02);
+    padding: 5px;
+    /* overflow: hidden; */
+    flex-grow: .8;
 }

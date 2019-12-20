@@ -1,13 +1,14 @@
-window.Alteryx.Gui.BeforeLoad = function (manager, AlteryxDataItems, json) {
+Alteryx.Gui.BeforeLoad = function (manager, AlteryxDataItems, json) {
 
   const token = new AlteryxDataItems.SimpleString('token');
   manager.addDataItem(token);
 
   const siteId = new AlteryxDataItems.SimpleString('siteId');
   manager.addDataItem(siteId);
+
 }
 
-window.Alteryx.Gui.AfterLoad = function (manager, AlteryxDataItems, json) {
+Alteryx.Gui.AfterLoad = function (manager, AlteryxDataItems, json) {
     // To hardcode your values, enter them here and uncomment lines 6-18
     // const uiValues = [
     //     ['serverURL', 'server url'],
@@ -25,63 +26,96 @@ window.Alteryx.Gui.AfterLoad = function (manager, AlteryxDataItems, json) {
     
 }
 
-window.authenticate = function authenticate(manager, AlteryxDataItems, json) {
+authenticate = function (manager, AlteryxDataItems, json) {
 
-    console.log("authenticate clicked")
-    let data = JSON.stringify({
-        "credentials": {
-          "name": window.Alteryx.Gui.Manager.getDataItem('username').getValue(),
-          "password": window.Alteryx.Gui.Manager.getDataItem('password').getValue(),
-          "site": {
-            "contentUrl": window.Alteryx.Gui.Manager.getDataItem('siteName').getValue()
-          }
-        }
-      });
-      
-      let xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-      
-      xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-          let response = JSON.parse(this.responseText)
-          window.Alteryx.Gui.Manager.getDataItem('token').setValue(response.credentials.token);
-          window.Alteryx.Gui.Manager.getDataItem('siteId').setValue(response.credentials.site.id);
-          getDataSources();      
-        }
-      });
-      
-      const endpointURL = window.Alteryx.Gui.Manager.getDataItem('serverURL').getValue() + 'api/3.6/auth/signin'
-      xhr.open("POST", endpointURL);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.setRequestHeader("Accept", "application/json");
-      xhr.send(data);
-
-}
-
-window.getDataSources = function getDataSources(manager, AlteryxDataItems, json) {
-
-  let data = null
-    
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-    
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4) {
-      let response = JSON.parse(this.responseText)
-      processDataSourceResponse(response.datasources.datasource)
+  let data = JSON.stringify({
+    "credentials": {
+      "name": Alteryx.Gui.Manager.getDataItem('username').getValue(),
+      "password": Alteryx.Gui.Manager.getDataItem('password').getValue(),
+      "site": {
+        "contentUrl": Alteryx.Gui.Manager.getDataItem('siteName').getValue()
+      }
     }
   });
+  
+  let request = new XMLHttpRequest();
+  request.withCredentials = true;
+
+  return new this.Promise(function (resolve, reject) {
     
-  const endpointURL = window.Alteryx.Gui.Manager.getDataItem('serverURL').getValue() + 'api/3.6/sites/' + window.Alteryx.Gui.Manager.getDataItem('siteId').getValue() +'/datasources'
-  xhr.open("GET", endpointURL);
-  xhr.setRequestHeader("X-Tableau-Auth", window.Alteryx.Gui.Manager.getDataItem('token').getValue());
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("Accept", "application/json");
-  xhr.send(data);
+    request.onreadystatechange = function () {
+
+      // Only run if the request is complete
+      if (request.readyState !== 4) return;
+
+      // Process the response
+      if (request.status >= 200 && request.status < 300) {
+        // If successful
+        let response = JSON.parse(this.responseText)
+        Alteryx.Gui.Manager.getDataItem('token').setValue(response.credentials.token)
+        Alteryx.Gui.Manager.getDataItem('siteId').setValue(response.credentials.site.id)
+        resolve(request)
+      } else {
+        // If failed
+        reject({
+          status: request.status,
+          statusText: request.statusText
+        });
+      }
+
+  };
+
+  // Setup our HTTP request
+  const endpointURL = Alteryx.Gui.Manager.getDataItem('serverURL').getValue() + 'api/3.6/auth/signin'
+  request.open('POST', endpointURL, true);
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Accept", "application/json");
+  // Send the request
+  request.send(data);
+  }) 
+}
+
+getDataSources = function (manager, AlteryxDataItems, json) {
+
+  let request = new XMLHttpRequest();
+  request.withCredentials = true;
+
+  return new this.Promise(function (resolve, reject) {
+    
+    request.onreadystatechange = function () {
+
+      // Only run if the request is complete
+      if (request.readyState !== 4) return;
+
+      // Process the response
+      if (request.status >= 200 && request.status < 300) {
+        // If successful
+        let response = JSON.parse(this.responseText)
+        processDataSourceResponse(response.datasources.datasource)
+        resolve(request)
+      } else {
+        // If failed
+        reject({
+          status: request.status,
+          statusText: request.statusText
+        });
+      }
+
+  };
+
+  // Setup our HTTP request
+  const endpointURL = Alteryx.Gui.Manager.getDataItem('serverURL').getValue() + 'api/3.6/sites/' + Alteryx.Gui.Manager.getDataItem('siteId').getValue() +'/datasources'
+  request.open('GET', endpointURL, true);
+  request.setRequestHeader("X-Tableau-Auth", Alteryx.Gui.Manager.getDataItem('token').getValue());
+  request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Accept", "application/json");
+  // Send the request
+  request.send();
+  }) 
 
 }
 
-window.processDataSourceResponse = function processDataSourceResponse(response) {
+processDataSourceResponse = function (response) {
   const data = response
   const dataSourceList = [];
 
@@ -106,5 +140,28 @@ window.processDataSourceResponse = function processDataSourceResponse(response) 
     return 0;
   });
 
-  window.Alteryx.Gui.Manager.getDataItem('dataSourceName').setOptionList(dataSourceList);
+  Alteryx.Gui.Manager.getDataItem('dataSourceName').setOptionList(dataSourceList);
 };
+
+populateDataSourceNames = function(manager, AlteryxDataItems, json) {
+  // clear error messages
+  errorMessageToggle(false)
+
+  authenticate()
+    .then(getDataSources)
+    .catch(function (error) {
+      errorMessageToggle(true, error)
+    })
+}
+
+errorMessageToggle = function(flag, error) {
+  if (flag) {
+    var target = document.getElementById('api-error')
+    target.innerHTML = `Status ${error.status}: ${error.statusText}`
+    target.className = 'error'
+  } else {
+    var target = document.getElementById('api-error')
+    target.innerHTML = ""
+    target.className = ''
+  }
+}
